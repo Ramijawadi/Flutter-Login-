@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "193097301897",
+    "firebase_url": "https://auth-fb642-default-rtdb.firebaseio.com",
+    "project_id": "auth-fb642",
+    "storage_bucket": "auth-fb642.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193097301897:android:929d579a866455f7f6ab58",
+        "android_client_info": {
+          "package_name": "com.example.flutter_login_page"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU-WG7rmLRjBnaG9nep0fpo6eViA1xuYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_page/components/My_Button.dart';
 import 'package:flutter_login_page/components/My_Textfield.dart';
@@ -10,39 +11,43 @@ class LoginPage extends StatelessWidget {
 
   //text editing controller
 
-  final usenameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   //signin
 
-  void SignUserIn() {}
+  void SignUserIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text, password: passwordController.text);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey.shade200,
-        body: SafeArea(
-        
+        backgroundColor: Color.fromARGB(255, 225, 221, 221),
+        body: SingleChildScrollView(
+          reverse: true,
+          child: SafeArea(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 50),
+                SizedBox(height: 10),
                 //logo
-                Icon(Icons.lock, size: 60),
+                Icon(Icons.lock, size: 20),
 
-                SizedBox(height: 50),
+                SizedBox(height: 10),
 
-                Text("you are welcole you\'ve been missed !",
+                Text("you are welcome you\'ve been missed !",
                     style:
                         TextStyle(color: Colors.grey.shade700, fontSize: 16)),
 
                 SizedBox(height: 25),
                 //you are welcome
-                //username testfield
+                //email testfield
 
                 MyTextField(
-                  controller: usenameController,
-                  hintText: 'username',
+                  controller: emailController,
+                  hintText: 'email',
                   obscuredText: false,
                 ),
 
@@ -53,6 +58,7 @@ class LoginPage extends StatelessWidget {
                   hintText: 'password',
                   obscuredText: true,
                 ),
+                // SizedBox(height: 10),
 
                 //forget password
                 Padding(
@@ -60,19 +66,24 @@ class LoginPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text('forget password !',
-                          style: TextStyle(color: Colors.grey.shade800)),
+                      Container(
+                        margin: EdgeInsets.only(top: 20.0),
+                        child: Text(
+                          'forget password !',
+                          style: TextStyle(color: Colors.grey.shade800),
+                        ),
+                      ),
                     ],
                   ),
                 ),
 
-                SizedBox(height: 25),
+                SizedBox(height: 10),
                 //sign in buttom
                 MyButton(
                   onTap: SignUserIn,
                 ),
 
-                SizedBox(height: 25),
+                SizedBox(height: 15),
                 //or continue with
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -98,7 +109,7 @@ class LoginPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 10),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -109,14 +120,17 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
 
-                SizedBox(height: 50),
+                SizedBox(height: 10),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Not member !' , style:TextStyle(color:Colors.grey.shade700)),
+                    Text('Not member !',
+                        style: TextStyle(color: Colors.grey.shade700)),
                     SizedBox(width: 4),
-                    Text('Register now !' , style:TextStyle(color:Colors.blue , fontWeight: FontWeight.bold)),
+                    Text('Register now !',
+                        style: TextStyle(
+                            color: Colors.blue, fontWeight: FontWeight.bold)),
                   ],
                 ),
                 //google and apple sign in button
@@ -124,7 +138,7 @@ class LoginPage extends StatelessWidget {
                 //not a member , register now
               ],
             ),
-          
+          ),
         ));
   }
 }
