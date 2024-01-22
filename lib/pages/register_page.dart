@@ -6,22 +6,23 @@ import 'package:flutter_login_page/components/My_Button.dart';
 import 'package:flutter_login_page/components/My_Textfield.dart';
 import 'package:flutter_login_page/components/Tuile_Carre.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function()? onTap;
-  const LoginPage({super.key, required this.onTap});
+  const RegisterPage({super.key, required this.onTap});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   //text editing controller
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
+  final confirmpasswordController = TextEditingController();
 
-  //signin
-  void signUserIn() async {
+  //signup
+  void signUserUp() async {
 //add loader to the page
 
     showDialog(
@@ -33,10 +34,16 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
+      //check if password confirm
+      if (passwordController.text == confirmpasswordController.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+      } else {
+        //show error message
+        ShowErrorMessage("password on't match");
+      }
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
@@ -81,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 SizedBox(height: 25),
 
-                Text("you are welcome you\'ve been missed !",
+                Text("Let\'s  create an account for you !",
                     style:
                         TextStyle(color: Colors.grey.shade700, fontSize: 16)),
 
@@ -104,28 +111,19 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 // SizedBox(height: 10),
 
-                //forget password
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 20.0),
-                        child: Text(
-                          'forget password !',
-                          style: TextStyle(color: Colors.grey.shade800),
-                        ),
-                      ),
-                    ],
-                  ),
+                SizedBox(height: 10),
+                //password textfield
+                MyTextField(
+                  controller: confirmpasswordController,
+                  hintText: 'confirm password',
+                  obscuredText: true,
                 ),
-
                 SizedBox(height: 25),
+                SizedBox(height: 10),
                 //sign in buttom
                 MyButton(
-                  text: "Sign In",
-                  onTap: signUserIn,
+                  text: "Sign Up",
+                  onTap: signUserUp,
                 ),
 
                 SizedBox(height: 25),
@@ -170,12 +168,12 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Not member !',
+                    Text('Already have an account  !',
                         style: TextStyle(color: Colors.grey.shade700)),
                     SizedBox(width: 4),
                     GestureDetector(
                       onTap: widget.onTap,
-                      child: Text('Register now !',
+                      child: Text('Login now !',
                           style: TextStyle(
                               color: Colors.blue, fontWeight: FontWeight.bold)),
                     ),
