@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login_page/components/My_Button.dart';
 import 'package:flutter_login_page/components/My_Textfield.dart';
 import 'package:flutter_login_page/components/Tuile_Carre.dart';
+import 'package:flutter_login_page/pages/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -159,9 +160,12 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TuileCarre(imagePath: 'lib/images/google1.png'),
+                    TuileCarre(
+                        onTap: () => AuthService().signInWithGoogle(),
+                        imagePath: 'lib/images/google1.png'),
                     SizedBox(width: 30),
-                    TuileCarre(imagePath: 'lib/images/apple1.png'),
+                    TuileCarre(
+                        onTap: () {}, imagePath: 'lib/images/apple1.png'),
                   ],
                 ),
 

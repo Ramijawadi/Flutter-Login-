@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login_page/components/My_Button.dart';
 import 'package:flutter_login_page/components/My_Textfield.dart';
 import 'package:flutter_login_page/components/Tuile_Carre.dart';
+import 'package:flutter_login_page/pages/services/auth_service.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -40,20 +42,37 @@ class _RegisterPageState extends State<RegisterPage> {
           email: emailController.text,
           password: passwordController.text,
         );
-      } else {
-        //show error message
-        ShowErrorMessage("password on't match");
+        // Show success pop-up
+        Fluttertoast.showToast(
+          msg: "User created successfully!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       }
-      Navigator.pop(context);
-    } on FirebaseAuthException catch (e) {
-      Navigator.pop(context);
-      // ShowErrorCode(e.message!);
-      print(e.message);
-      //if wrong user EMAIL
-
-      ShowErrorMessage(e.code);
+    } catch (e) {
+      // Handle any errors during user creation
+      print("Error creating user: $e");
     }
   }
+
+  //     } else {
+  //       //show error message
+  //       ShowErrorMessage("password on't match");
+  //     }
+  //     Navigator.pop(context);
+  //   } on FirebaseAuthException catch (e) {
+  //     Navigator.pop(context);
+  //     // ShowErrorCode(e.message!);
+  //     print(e.message);
+  //     //if wrong user EMAIL
+
+  //     ShowErrorMessage(e.code);
+  //   }
+  // }
 
   void ShowErrorMessage(String message) {
     showDialog(
@@ -157,9 +176,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TuileCarre(imagePath: 'lib/images/google1.png'),
+                    TuileCarre(
+                        onTap: () => AuthService().signInWithGoogle(),
+                        imagePath: 'lib/images/google1.png'),
                     SizedBox(width: 30),
-                    TuileCarre(imagePath: 'lib/images/apple1.png'),
+                    TuileCarre(
+                        onTap: () {}, imagePath: 'lib/images/apple1.png'),
                   ],
                 ),
 
